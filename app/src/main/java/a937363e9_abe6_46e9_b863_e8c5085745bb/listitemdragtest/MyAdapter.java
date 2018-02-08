@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MyViewHolder(context);
+        return new MyViewHolder(context, parent);
     }
 
     @Override
@@ -51,8 +52,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView itemText;
 
-        public MyViewHolder(Context context) {
-            super(View.inflate(context, R.layout.list_item, null));
+        public MyViewHolder(Context context, ViewGroup parent) {
+            super(LayoutInflater.from(context).inflate(R.layout.list_item, parent, false));
             itemText = (TextView)itemView.findViewById(R.id.textView);
             itemView.findViewById(R.id.dots).setOnTouchListener(new View.OnTouchListener() {
                 @Override
