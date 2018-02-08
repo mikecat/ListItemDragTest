@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ListItemDragTest</string>
+    <string name="add_button">add</string>
 </resources>
