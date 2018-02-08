@@ -4,12 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-
-    private MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.theList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(this);
+        final MyAdapter adapter = new MyAdapter(this);
         recyclerView.setAdapter(adapter);
         adapter.addItem(getText(R.string.initial_item1).toString());
         adapter.addItem(getText(R.string.initial_item2).toString());
@@ -33,5 +33,24 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        ItemTouchHelper ith = new ItemTouchHelper(
+                new ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        int fromPos = viewHolder.getAdapterPosition();
+                        int toPos = target.getAdapterPosition();
+                        Log.d("item_move", "move " + fromPos + " to " + toPos);
+                        adapter.notifyItemMoved(fromPos, toPos);
+                        return true;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+                    }
+                }
+        );
+        ith.attachToRecyclerView(recyclerView);
     }
 }
