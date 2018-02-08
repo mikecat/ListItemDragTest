@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
                         int fromPos = viewHolder.getAdapterPosition();
                         int toPos = target.getAdapterPosition();
                         Log.d("item_move", "move " + fromPos + " to " + toPos);
+                        String item = adapter.getItem(fromPos);
+                        adapter.removeItem(fromPos);
+                        adapter.insertItem(toPos, item);
                         adapter.notifyItemMoved(fromPos, toPos);
                         return true;
                     }

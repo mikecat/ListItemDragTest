@@ -26,6 +26,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         items.add(text);
     }
 
+    public void insertItem(int position, String text) {
+        items.add(position, text);
+    }
+
+    public String getItem(int position) {
+        return items.get(position);
+    }
+
     public void removeItem(int position) {
         items.remove(position);
     }
