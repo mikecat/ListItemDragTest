@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MyAdapter(this);
         recyclerView.setAdapter(adapter);
-        adapter.addItem("cat");
-        adapter.addItem("dog");
-        adapter.addItem("rabbit");
+        adapter.addItem(getText(R.string.initial_item1).toString());
+        adapter.addItem(getText(R.string.initial_item2).toString());
+        adapter.addItem(getText(R.string.initial_item3).toString());
         adapter.notifyDataSetChanged();
 
         final EditText editTextToAdd = (EditText)findViewById(R.id.textToAdd);

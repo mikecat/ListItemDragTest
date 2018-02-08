@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ListItemDragTest</string>
     <string name="add_button">add</string>
+    <string name="initial_item1">cat</string>
+    <string name="initial_item2">dog</string>
+    <string name="initial_item3">rabbit</string>
 </resources>
