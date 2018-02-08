@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -53,14 +54,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public MyViewHolder(Context context) {
             super(View.inflate(context, R.layout.list_item, null));
             itemText = (TextView)itemView.findViewById(R.id.textView);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            itemView.findViewById(R.id.dots).setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    Log.d("item", "long click " + itemText.getText());
-                    if (itemTouchHelper != null) {
-                        itemTouchHelper.startDrag(MyViewHolder.this);
+                public boolean onTouch(View v, MotionEvent event) {
+                    Log.d("item", "touched " + itemText.getText());
+                    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        if (itemTouchHelper != null) {
+                            itemTouchHelper.startDrag(MyViewHolder.this);
+                        }
                     }
-                    return true;
+                    return false;
                 }
             });
         }
