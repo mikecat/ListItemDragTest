@@ -19,11 +19,9 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.theList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         final MyAdapter adapter = new MyAdapter(this);
-        recyclerView.setAdapter(adapter);
         adapter.addItem(getText(R.string.initial_item1).toString());
         adapter.addItem(getText(R.string.initial_item2).toString());
         adapter.addItem(getText(R.string.initial_item3).toString());
-        adapter.notifyDataSetChanged();
 
         final EditText editTextToAdd = (EditText)findViewById(R.id.textToAdd);
         findViewById(R.id.addButton).setOnClickListener(new View.OnClickListener() {
@@ -49,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
                     }
+
+                    @Override
+                    public boolean isLongPressDragEnabled() {
+                        return false;
+                    }
                 }
         );
+        adapter.setItemTouchHelper(ith);
         ith.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(adapter);
     }
 }

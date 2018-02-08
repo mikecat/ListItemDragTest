@@ -2,14 +2,19 @@ package a937363e9_abe6_46e9_b863_e8c5085745bb.listitemdragtest;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<String> items = new ArrayList<>();
     private Context context;
+    private ItemTouchHelper itemTouchHelper;
 
     public MyAdapter(Context context) {
         this.context = context;
@@ -21,6 +26,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
     public void removeItem(int position) {
         items.remove(position);
+    }
+
+    public void setItemTouchHelper(ItemTouchHelper itemTouchHelper) {
+        this.itemTouchHelper = itemTouchHelper;
     }
 
     @Override
@@ -36,5 +45,28 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder {
+        private TextView itemText;
+
+        public MyViewHolder(Context context) {
+            super(View.inflate(context, R.layout.list_item, null));
+            itemText = (TextView)itemView.findViewById(R.id.textView);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Log.d("item", "long click " + itemText.getText());
+                    if (itemTouchHelper != null) {
+                        itemTouchHelper.startDrag(MyViewHolder.this);
+                    }
+                    return true;
+                }
+            });
+        }
+
+        public void setItemText(String text) {
+            itemText.setText(text);
+        }
     }
 }
